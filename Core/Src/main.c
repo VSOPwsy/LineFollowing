@@ -46,17 +46,6 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-struct UART {
-    unsigned char frame_header;
-    unsigned char angle_error;
-    unsigned char distance_error;
-    unsigned char frame_tail;
-    unsigned char state;
-    unsigned char buf[2];
-    unsigned char received;
-};
-
-struct UART uart;
 
 /* USER CODE END PV */
 
@@ -64,13 +53,7 @@ struct UART uart;
 void SystemClock_Config(void);
 
 /* USER CODE BEGIN PFP */
-void update_pid(struct PID *pid, float current_angle, float current_distance, void (*motor_function)(int, int));
-void Motor_Rotation(int, int);
 
-void Motor_Left_Front(int);
-void Motor_Right_Front(int);
-void Motor_Left_Rear(int);
-void Motor_Right_Rear(int);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -119,8 +102,8 @@ int main(void)
   while (1)
   {
     HAL_UART_Receive_IT(&huart2, (unsigned char *)&uart_rx_data.received, 1);
-    float current_angle = uart.angle_error; // Get the current angle of the motors
-    float current_distance = uart.distance_error; // Get the current distance from center of the motors
+    float current_angle = uart_rx_data.angle_error; // Get the current angle of the motors
+    float current_distance = uart_rx_data.distance_error; // Get the current distance from center of the motors
     update_pid(&pid_control, current_angle, current_distance, Motor_Rotation);
     
     /* USER CODE END WHILE */

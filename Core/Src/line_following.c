@@ -1,6 +1,8 @@
 #include "line_following.h"
 #include "tim.h"
 
+struct PID pid_control;
+
 void Line_Following_Init()
 {
     pid_control.Kp_angle = 3;

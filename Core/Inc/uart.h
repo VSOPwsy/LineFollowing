@@ -8,7 +8,7 @@ struct UART_RX_DATA {
     unsigned char received;
 };
 
-struct UART_RX_DATA uart_rx_data;
+extern struct UART_RX_DATA uart_rx_data;
 
 void UART_Init(void);
 

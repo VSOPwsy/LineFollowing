@@ -9,7 +9,7 @@ struct PID {
     float Kp_distance, Ki_distance, Kd_distance; // PID coefficients for distance
 };
 
-struct PID pid_control;
+extern struct PID pid_control;
 
 void Line_Following_Init(void);
 

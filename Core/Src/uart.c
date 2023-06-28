@@ -1,5 +1,7 @@
 #include "uart.h"
 
+struct UART_RX_DATA uart_rx_data;
+
 void UART_Init(void)
 {
     uart_rx_data.frame_header = 0xAA;
