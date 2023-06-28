@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 
@@ -44,20 +45,6 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-struct PID {
-    float desired_angle;  // Desired angle
-    float desired_distance; // Desired distance from center
-    float previous_angle_error; // Angle error from previous cycle
-    float previous_distance_error; // Distance error from previous cycle
-    float integral_angle; // Sum of angle errors
-    float integral_distance; // Sum of distance errors
-    float Kp_angle, Ki_angle, Kd_angle; // PID coefficients for angle
-    float Kp_distance, Ki_distance, Kd_distance; // PID coefficients for distance
-};
-
-struct PID pid_control;
-
-
 struct UART {
     unsigned char frame_header;
     unsigned char angle_error;

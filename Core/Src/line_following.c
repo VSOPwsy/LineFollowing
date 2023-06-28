@@ -38,10 +38,10 @@ void update_pid(struct PID *pid, float current_angle, float current_distance, vo
 
 void Motor_Rotation(int angle, int distance)
 {
-  Motor_Left_Front(40000 + angle);
-  Motor_Left_Rear(40000 + angle);
-  Motor_Right_Front(40000 - angle);
-  Motor_Right_Front(40000 - angle);
+  Motor_Left_Front(40000 + angle + distance);
+  Motor_Left_Rear(40000 + angle - distance);
+  Motor_Right_Front(40000 - angle - distance);
+  Motor_Right_Rear(40000 - angle + distance);
 }
 
 void Motor_Left_Front(int speed)
