@@ -11,7 +11,7 @@ struct PID {
 
 struct PID pid_control;
 
-void Line_Following_init(void);
+void Line_Following_Init(void);
 
 void update_pid(struct PID *pid, float current_angle, float current_distance, void (*motor_function)(int, int));
 

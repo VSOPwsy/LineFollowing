@@ -20,6 +20,7 @@
 #include "main.h"
 #include "tim.h"
 #include "usart.h"
+#include "uart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -93,23 +94,15 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-  uart.frame_header = 0xAA;
-  uart.angle_error = 0;
-  uart.distance_error = 0;
-  uart.frame_tail = 0x55;
-  uart.state = 0;
-
-  for (int i = 0; i < 2; i++)
-  {
-      uart.buf[i] = 0;
-  }
+  Line_Following_Init();
+  UART_Init();
   /* USER CODE END Init */
 
   /* Configure the system clock */
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-  Line_Following_init();
+  
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -125,7 +118,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    HAL_UART_Receive_IT(&huart2, (unsigned char *)&uart.received, 1);
+    HAL_UART_Receive_IT(&huart2, (unsigned char *)&uart_rx_data.received, 1);
     float current_angle = uart.angle_error; // Get the current angle of the motors
     float current_distance = uart.distance_error; // Get the current distance from center of the motors
     update_pid(&pid_control, current_angle, current_distance, Motor_Rotation);
@@ -179,36 +172,8 @@ void SystemClock_Config(void)
 /* USER CODE BEGIN 4 */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-    if (uart.state == 0 && uart.received == uart.frame_header)
-    {
-      uart.state += 1;
-    }
-    else if (uart.state == 1)
-    {
-      uart.state += 1;
-      uart.buf[0] = uart.received;
-    }
-    else if (uart.state == 2)
-    {
-      uart.state += 1;
-      uart.buf[1] = uart.received;
-    }
-    else if (uart.state == 3 && uart.received == uart.frame_tail)
-    {
-      uart.state = 0;
-      uart.angle_error = uart.buf[0];
-      uart.distance_error = uart.buf[1];
-      uart.buf[0] = 0;
-      uart.buf[1] = 0;
-    }
-    else
-    {
-      uart.state = 0;
-      uart.buf[0] = 0;
-      uart.buf[1] = 0;
-    }
-
-    HAL_UART_Receive_IT(&huart2, (unsigned char *)&uart.received, 1);
+    UART_Receive();
+    HAL_UART_Receive_IT(&huart2, (unsigned char *)&uart_rx_data.received, 1);
 }
 /* USER CODE END 4 */
 
