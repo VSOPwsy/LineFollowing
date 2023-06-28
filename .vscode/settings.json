@@ -1,4 +1,7 @@
 {
     "C_Cpp.errorSquiggles": "enabled",
-    "C_Cpp.default.compilerPath": "d:\\Users\\wangs\\Documents\\Code\\LineFollowing\\Core\\Inc\\main.h"
+    "C_Cpp.default.compilerPath": "d:\\Users\\wangs\\Documents\\Code\\LineFollowing\\Core\\Inc\\main.h",
+    "files.associations": {
+        "usart.h": "c"
+    }
 }

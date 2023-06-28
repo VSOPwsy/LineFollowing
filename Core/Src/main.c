@@ -20,12 +20,12 @@
 #include "main.h"
 #include "tim.h"
 #include "usart.h"
-#include "uart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "line_following.h"
+#include "uart.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
