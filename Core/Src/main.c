@@ -1,6 +1,7 @@
 #include "main.h"
 
 #include "task_1.h"
+#define pushed
 
 void SystemClock_Config(void);
 
