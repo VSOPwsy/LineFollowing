@@ -5,6 +5,9 @@ struct PID pid_control;
 
 void Line_Following_Init()
 {
+    MX_TIM3_Init();
+    MX_TIM4_Init();
+
     pid_control.Kp_angle = 3;
     pid_control.Ki_angle = 1;
     pid_control.Kd_angle = 1;

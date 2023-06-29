@@ -7,10 +7,12 @@ void UART_Init(void)
     uart_rx_data.frame_header = 0xAA;
     uart_rx_data.angle_error = 0;
     uart_rx_data.distance_error = 0;
+    uart_rx_data.stop = 0;
     uart_rx_data.frame_tail = 0x55;
     uart_rx_data.state = 0;
     uart_rx_data.buf[0] = 0;
     uart_rx_data.buf[1] = 0;
+    uart_rx_data.buf[2] = 0;
     uart_rx_data.received = 0;
 }
 
@@ -30,18 +32,26 @@ void UART_Receive(void)
       uart_rx_data.state += 1;
       uart_rx_data.buf[1] = uart_rx_data.received;
     }
-    else if (uart_rx_data.state == 3 && uart_rx_data.received == uart_rx_data.frame_tail)
+    else if (uart_rx_data.state == 3)
+    {
+      uart_rx_data.state += 1;
+      uart_rx_data.buf[2] = uart_rx_data.received;
+    }
+    else if (uart_rx_data.state == 4 && uart_rx_data.received == uart_rx_data.frame_tail)
     {
       uart_rx_data.state = 0;
       uart_rx_data.angle_error = uart_rx_data.buf[0];
       uart_rx_data.distance_error = uart_rx_data.buf[1];
+      uart_rx_data.stop = uart_rx_data.buf[2];
       uart_rx_data.buf[0] = 0;
       uart_rx_data.buf[1] = 0;
+      uart_rx_data.buf[2] = 0;
     }
     else
     {
       uart_rx_data.state = 0;
       uart_rx_data.buf[0] = 0;
       uart_rx_data.buf[1] = 0;
+      uart_rx_data.buf[2] = 0;
     }
 }
