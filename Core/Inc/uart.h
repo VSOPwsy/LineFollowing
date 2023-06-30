@@ -1,11 +1,10 @@
 struct UART_RX_DATA {
     unsigned char frame_header;
-    unsigned char angle_error;
-    unsigned char distance_error;
-    unsigned char stop;
+    unsigned char length;
+    unsigned char data[40];
     unsigned char frame_tail;
     unsigned char state;
-    unsigned char buf[3];
+    unsigned char buf[40];
     unsigned char received;
 };
 

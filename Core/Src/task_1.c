@@ -16,7 +16,7 @@ void TASK_1_Init()
 
 void task_1()
 {
-    while (uart_rx_data.stop == 0)
+    while (uart_rx_data.data[2] == 0)
     {
         follow_line();
     }
@@ -25,8 +25,8 @@ void task_1()
 
 void follow_line()
 {
-  float current_angle = uart_rx_data.angle_error;
-  float current_distance = uart_rx_data.distance_error;
+  float current_angle = uart_rx_data.data[0];
+  float current_distance = uart_rx_data.data[1];
   update_pid(&pid_control, current_angle, current_distance, Motor_Rotation);
 }
 
